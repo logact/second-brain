@@ -163,6 +163,7 @@ export async function queryBlock(blockId) {
             elementId2Id[block.get(0).elementId] = properties.id
             return {
                 name: properties.id,
+                label: properties.name
             }
         })
         relations = relations.records.map(relation => {

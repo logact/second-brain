@@ -18,30 +18,43 @@ export default function Brain() {
                 let graph = res.data.data
                 myChart.hideLoading();
                 graph.blocks.forEach(function (node) {
-                    node.symbolSize = 5;
-                });
+                    node.symbolSize = node.value
+                })
                 option = {
                     title: {
-                        text: 'Les Miserables',
+                        text: "Neo's Brains",
                         subtext: 'Default layout',
                         top: 'bottom',
                         left: 'right'
-                        //test1 gitpush script
                     },
-                    tooltip: {},
+                    tooltip: {
+                        formatter: (params) => {
+                            // 可以使用html语言定义tooltip
+                            // return `<h2>asdfasdf</h2><h1>asdfasdf</h1>`
+                            return params.data.label
+                        }
+                    },
                     series: [
                         {
-                            name: 'Les Miserables',
+                            draggable: true,
                             type: 'graph',
                             layout: 'force',
                             data: graph.blocks,
                             links: graph.relations,
                             roam: true,
                             label: {
-                                position: 'right'
+                                show: true,
+                                position: 'right',
+                                formatter: (params) => {
+                                    return params.data.label
+                                }
                             },
                             force: {
                                 repulsion: 100
+                            },
+                            lineStyle: {
+                                color: 'source',
+                                curveness: 0.3
                             }
                         }
                     ]
