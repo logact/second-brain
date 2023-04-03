@@ -1,0 +1,16 @@
+{
+  "private": true,
+  "scripts": {
+    "dev": "next dev -p 4002",
+    "build": "next build -p 4002",
+    "start": "next start -p 4002"
+  },
+  "dependencies": {
+    "echarts": "^5.4.2",
+    "jquery": "^3.6.4",
+    "neovis.js": "^2.0.2",
+    "next": "latest",
+    "react": "18.2.0",
+    "react-dom": "18.2.0"
+  }
+}
