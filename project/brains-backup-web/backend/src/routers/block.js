@@ -13,7 +13,7 @@ router.post("/connection", async (ctx) => {
     const {blockId1, blockId2} = ctx.request.body
     ctx.body = wrapOkResponse(await connectBlock(blockId1, blockId2))
 })
-router.get('/block',async(ctx)=>{
+router.get('/',async(ctx)=>{
     const {blockId} = ctx.request.params
     ctx.body = wrapOkResponse(await queryBlock(blockId))
 })

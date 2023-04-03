@@ -1,6 +1,6 @@
 import React, {useEffect} from "react";
 import * as echarts from "echarts";
-import jquery from "jquery"
+import axios from "../utils/axios";
 
 export default function Brain() {
     const initChart = () => {
@@ -9,59 +9,46 @@ export default function Brain() {
             renderer: 'canvas',
             useDirtyRect: false
         });
-        let ROOT_PATH = 'https://echarts.apache.org/examples';
         let option;
 
         myChart.showLoading();
 
-
-        jquery.getJSON(ROOT_PATH + '/data/asset/data/les-miserables.json', function (graph) {
-            myChart.hideLoading();
-            option = {
-                tooltip: {},
-                legend: [
-                    {
-                        data: graph.categories.map(function (a) {
-                            return a.name;
-                        })
-                    }
-                ],
-                series: [
-                    {
-                        name: 'Les Miserables',
-                        type: 'graph',
-                        layout: 'none',
-                        data: graph.nodes,
-                        links: graph.links,
-                        categories: graph.categories,
-                        roam: true,
-                        label: {
-                            show: true,
-                            position: 'right',
-                            formatter: '{b}'
-                        },
-                        labelLayout: {
-                            hideOverlap: true
-                        },
-                        scaleLimit: {
-                            min: 0.4,
-                            max: 2
-                        },
-                        lineStyle: {
-                            color: 'source',
-                            curveness: 0.3
+        axios.get('/block')
+            .then(res => {
+                let graph = res.data.data
+                myChart.hideLoading();
+                graph.blocks.forEach(function (node) {
+                    node.symbolSize = 5;
+                });
+                option = {
+                    title: {
+                        text: 'Les Miserables',
+                        subtext: 'Default layout',
+                        top: 'bottom',
+                        left: 'right'
+                    },
+                    tooltip: {},
+                    series: [
+                        {
+                            name: 'Les Miserables',
+                            type: 'graph',
+                            layout: 'force',
+                            data: graph.blocks,
+                            links: graph.relations,
+                            roam: true,
+                            label: {
+                                position: 'right'
+                            },
+                            force: {
+                                repulsion: 100
+                            }
                         }
-                    }
-                ]
-            };
-            myChart.setOption(option);
-        });
-
-        if (option && typeof option === 'object') {
-            myChart.setOption(option);
-        }
-
-        window.addEventListener('resize', myChart.resize);
+                    ]
+                };
+                myChart.setOption(option)
+            }).catch(e => {
+            console.log(e)
+        })
     }
     useEffect(() => {
         initChart()

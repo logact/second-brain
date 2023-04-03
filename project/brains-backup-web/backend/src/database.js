@@ -162,9 +162,7 @@ export async function queryBlock(blockId) {
             let properties = block.get(0).properties;
             elementId2Id[block.get(0).elementId] = properties.id
             return {
-                id:properties.id,
-                name: properties.name,
-                category:'block'
+                name: properties.id,
             }
         })
         relations = relations.records.map(relation => {
