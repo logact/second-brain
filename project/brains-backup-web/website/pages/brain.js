@@ -26,6 +26,7 @@ export default function Brain() {
                         subtext: 'Default layout',
                         top: 'bottom',
                         left: 'right'
+                        //test gitpush script
                     },
                     tooltip: {},
                     series: [
